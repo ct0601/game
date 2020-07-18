@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 	
+<title>记忆界面</title>
+	<style type="text/css">
+		body{
+			margin: 0;
+			background-color: white;
+		}
+		.pic{
+			margin: auto;
+			width: 45%;
+			height: auto;
+		}
+		img{
+			float: left;
+			width:33%;
+			height: auto;
+		}
+		.left{
+			width: 70%;
+			height: 2em;
+			float: left;
+			background: black;
+			color: white;
+			font-size: 1.5em;
+			font-family: "幼圆";
+			text-align: center;
+		}
+		.right{
+			width: 29%;
+			height: 3em;
+			float: left;
+			background: skyblue;
+		}
+		span{
+			
+			float: left;
+			font-family: "幼圆";
+			font-weight: bold;
+			font-size: 1.5em;
+		}
+	</style>
+</head>
+<body>
+	<div class="pic">
+		<img id="1"src="11.png">
+		<img id="2"src="22.png">
+		<img id="3"src="33.png">
+		<img id="4"src="44.png">
+		<img id="5"src="55.png">
+		<img id="6"src="66.png">
+		<img id="7"src="77.png">
+		<img id="8"src="88.png">
+		<img id="9"src="99.png">
+		<div class="left">请在十秒钟内快速记忆以上九位新同学的名字</div>
+		<div class="right"><span id="word">&nbsp;&nbsp;&nbsp;倒计时开始！</span></div>
+	</div>
+	<script>
+		window.onload=function(){
+			setInterval(cuttime,1000);
+			pl();
+		}
+		var words=document.getElementById("word");
+		var time=11;
+		function cuttime(){
+			if(time>0){
+				time--;
+				words.innerHTML="&nbsp;&nbsp;&nbsp;倒计时："+time+"秒";
+			}
+			else{
+				self.location.href="game.html";
+			}
+		}
+		function pl(){
+			var i=1;
+			var num=[0,0,0,0,0,0,0,0,0,0];
+			var number;
+			var j=0;
+			for(i=1;i<10;i++){
+				var pic=document.getElementById(i);
+				var number=Math.ceil(Math.random()*9);
+				num[i]=number;
+				var src=number+".png";
+				src=number+src;
+				pic.src=src;
+				for(j=1;j<i;j++){
+					if(num[i]==num[j]){
+						i--;
+						break;
+					}
+				}	
+			}
+		}
+	</script>
+</body>
+</html>

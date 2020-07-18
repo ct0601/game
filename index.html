@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 	
+<title>记住那个新同学</title>
+	<style type="text/css" >
+		body{
+			margin: 0;
+			background-color: white;
+		}
+		div{
+			margin: auto;
+			width: 50%;
+			height: auto;
+		}
+		img{
+			width:100%;
+			height: auto;
+		}
+		button{
+			display: inline-block;
+			width: 20%;
+		    padding: 0.5em;
+			font-size: 2em;
+		    cursor: pointer;
+		    text-align: center;   
+		    outline: none;
+		    color: #fff;
+		    background-color: skyblue;
+		    border-radius: 30%;
+		    box-shadow: 0 0.5em #999;
+			margin-left: 20%;
+			font-family:幼圆;
+		}
+		button:hover {
+			background-color: skyblue;
+			color: white;
+		}
+		button:active {
+		    box-shadow: 0 0.1em #666;
+		    transform: translateY(4px);
+		}
+		#scroll {
+            width: 100%;
+            height: 1.4em;
+            white-space: nowrap;
+            overflow: hidden;
+			font-family:幼圆;
+			color: black;
+			background:#88dda4;
+			font-size: 1.4em;
+        }
+	</style>
+</head>
+<body>
+	<div>
+		<img src="hdu.jpg">
+		<div id="scroll">			
+				&nbsp;&nbsp;&nbsp;新学期开始了，快来认识一下新同学吧！
+				&nbsp;&nbsp;&nbsp;新学期开始了，快来认识一下新同学吧！
+				&nbsp;&nbsp;&nbsp;新学期开始了，快来认识一下新同学吧！
+				&nbsp;&nbsp;&nbsp;新学期开始了，快来认识一下新同学吧！&nbsp;&nbsp;&nbsp;		
+		</div>
+		<br/>
+		<button onClick="self.location.href='memory.html'">确认开始</button>
+		<button onClick="pd()">我才不玩</button>
+	</div>
+	<script>
+		window.onload = function(){
+			scroll();
+		};
+		function scroll(){
+			var word = document.getElementById('scroll');
+			var i=0;
+			function gd(){
+				word.scrollLeft ++;
+				i++;
+				if(i>380){
+					i=0;
+					word.scrollLeft=0;
+				}
+        }
+        setInterval(gd,20);
+		}
+		var i=0;
+		function pd(){
+			i++;
+			var an=confirm("真的不玩吗！第"+i+"次询问");
+			if (an==true){
+				pd();
+			}
+			else{
+				alert("谢谢你给我一次机会！");
+			}
+		}
+	</script>
+</body>
+</html>

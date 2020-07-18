@@ -1,0 +1,292 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> 
+<title>游戏识别</title>
+	<style type="text/css">
+		#map{
+			height: auto;
+			width: 40%;
+			margin: auto;
+			text-align: center;
+		}
+		#map img{
+			width: 33%;
+			height: auto;
+			float: left;
+			cursor: pointer;
+		}
+		#main{
+			height: auto;
+			width: 50%;
+			margin: auto;
+			text-align: center;
+		}
+		#main img{
+			margin-top: -10em;
+			width: 70%;
+			height: auto;
+		}
+		.ending{
+			height: auto;
+			width: 50%;
+			margin: auto;
+			text-align: center;
+		}
+		.ending img{
+			margin-top: -10em;
+			height: auto;
+			width: 60%;
+			text-align: center;
+		}
+		.bottom{
+			height:3em;
+			width: 100%;
+			background: skyblue;
+			font-size: 1.5em;
+			display: inline-block;
+			vertical-align: middle;
+			font-family: "幼圆";
+			font-weight: bold;	
+			margin-top: 1em;
+			overflow: hidden;
+		}
+		input{
+			width: 40%;
+			height: 2em;
+			text-align: center;
+			font-size: 1.5em;
+		}
+		button{
+			width: 10%;
+			height: 2em;
+			font-size: 1.5em;
+			overflow: hidden;
+		}
+		.yes{
+			height: auto;
+			width: 50%;
+			margin: auto;
+			text-align: center;
+		}
+		.yes img{
+			width: 70%;
+			height: auto;
+		}
+		.no{
+			height: auto;
+			width: 50%;
+			margin: auto;
+			text-align: center;
+		}
+		.no img{
+			width: 70%;
+			height: auto;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="map">
+		<img onClick="appear1()" src="map_01.jpg">
+		<img onClick="appear2()" src="map_02.gif">
+		<img onClick="appear3()" src="map_03.gif">
+		<img onClick="appear4()" src="map_04.gif">
+		<img onClick="appear5()" src="map_05.gif">
+		<img onClick="appear6()" src="map_06.gif">
+		<img onClick="appear7()" src="map_07.gif">
+		<img onClick="appear8()" src="map_08.gif">
+		<img onClick="appear9()" src="map_09.gif">
+		<div  class="bottom">
+			<p>这一天你决定到处走走（点击选择你要前往的区域）</p>
+		</div>
+	</div>
+	<div  id="main" style="display: none">
+		<img id="pic"src="1.png">
+		<input style="visibility:hidden" id="an" type="text" placeholder="请在这里输入同学的名字" >
+		<button style="visibility: hidden" id="qr" onClick="check()">确认</button>
+		<div class="bottom">
+			<p id="full" style="display: none; margin-top: 1em;">你偶遇了一位新同学，他向你打了个招呼，请问他的名字是？</p>
+			<p id="word" ></p>
+		</div>
+	</div>
+	<div class="yes" id="yes"style="display: none;">
+		<img src="lays.png">
+		<button style="visibility: hidden" id="qr1" onClick="next()">继续</button>
+		<div class="bottom" style="background: #d778c2;">
+			<p id="lays1" style="display: none; margin-top: 1em;">新同学很高兴你还记得他，并送给了你一包乐四薯片！(积分+1)</p>
+			<p id="lays2" ></p>
+		</div>
+	</div>
+	<div class="no"id="no" style="display: none;">
+		<img id="ts" src="11.png">
+		<br/>
+		<button style="visibility: hidden " id="qr2" onClick="next()">继续</button>
+		<div class="bottom" style="background: skyblue;">
+		<p id="no1" style="display: none; margin-top: 1em;">看来你并不记得这位同学的名字，他有些失落得离开了</p>
+		<p id="no2"></p>
+		</div>
+	</div>
+	<div class="ending" id="ending" style="display: none;">
+		<img id="endimg"src="1.png">
+		<div class="bottom" style="background: skyblue;">
+		<p id="endword"></p>
+		</div>
+		<br/><br/><br/>
+		<button style="width: 20%;" onClick="self.location.href='index.html'">返回主页</button>
+		<button style="width: 20%;" onClick="window.close();" >结束游戏</button>
+	</div>
+	<script>
+	var i=0;
+	var mark=0;
+	var jifen=0;
+	var sum=0;
+	var num=0;
+	var flag=[0,0,0,0,0,0,0,0,0,0];
+	var a1=document.getElementById("full");
+	var a2=document.getElementById("word");
+	var btn=document.getElementById("an");
+	var qr=document.getElementById("qr");
+	var qr1=document.getElementById("qr1");
+	var qr2=document.getElementById("qr2");
+	var map=document.getElementById("map");
+	var main=document.getElementById("main");
+	var yes=document.getElementById("yes");
+	var no=document.getElementById("no");
+	var lays1=document.getElementById("lays1");
+	var lays2=document.getElementById("lays2");
+	var no1=document.getElementById("no1");
+	var no2=document.getElementById("no2");
+	var pic=document.getElementById("pic");
+	var ts=document.getElementById("ts");
+	var ending=document.getElementById("ending");
+	var endimg=document.getElementById("endimg");
+	var endword=document.getElementById("endword");
+	function appear1(){ num=3;if(flag[1]!=1){appear();}else{alert("你已经去过这个地方了！");}flag[1]=1;}	
+	function appear2(){ num=6;if(flag[2]!=1){appear();}else{alert("你已经去过这个地方了！");}flag[2]=1;}	
+	function appear3(){ num=1;if(flag[3]!=1){appear();}else{alert("你已经去过这个地方了！");}flag[3]=1;}	
+	function appear4(){ num=2;if(flag[4]!=1){appear();}else{alert("你已经去过这个地方了！");}flag[4]=1;}	
+	function appear5(){ num=9;if(flag[5]!=1){appear();}else{alert("你已经去过这个地方了！");}flag[5]=1;}	
+	function appear6(){ num=5;if(flag[6]!=1){appear();}else{alert("你已经去过这个地方了！");}flag[6]=1;}	
+	function appear7(){ num=7;if(flag[7]!=1){appear();}else{alert("你已经去过这个地方了！");}flag[7]=1;}	
+	function appear8(){ num=4;if(flag[8]!=1){appear();}else{alert("你已经去过这个地方了！");}flag[8]=1;}	
+	function appear9(){ num=8;if(flag[9]!=1){appear();}else{alert("你已经去过这个地方了！");}flag[9]=1;}	
+	function appear(){
+		pic.src=num+".png";
+		main.style.display="block";
+		map.style.display="none";
+		sum++;
+		var time=setInterval(function(){
+			a2.innerHTML=a1.innerHTML.substring(0,i);
+			i++;
+			if(a2.innerHTML==a1.innerHTML){
+				btn.style.visibility="visible";    /*字出现完毕后输入和按钮出现*/
+				qr.style.visibility="visible";
+				i=0;
+				clearInterval(time);
+		}},100);	
+	}
+	function check(){                         	/*是否记忆正确*/
+		var name;
+		switch(num){
+			case 1: name="壹壹";break;
+			case 2: name="二二";break;
+			case 3: name="三三";break;
+			case 4: name="小四";break;
+			case 5: name="小五";break;
+			case 6: name="小六";break;
+			case 7: name="七七";break;
+			case 8: name="八八";break;
+			case 9: name="九九";break;
+		}
+		if(btn.value==name){
+			main.style.display="none";
+			yes.style.display="block";
+			appearyes();
+			i=0;
+			mark=num;
+			jifen++;
+		}else{
+			var tsname=num+".png";
+			tsname=num+tsname;
+			ts.src=tsname;
+			main.style.display="none";
+			no.style.display="block";
+			appearno();
+		}
+	}
+	function appearyes(){                      /*正确后字体出现*/
+		var time1=setInterval(function(){
+			lays2.innerHTML=lays1.innerHTML.substring(0,i);
+			i++;
+			if(lays2.innerHTML==lays1.innerHTML){
+				qr1.style.visibility="visible";
+				clearInterval(time1);
+		}},100);	
+	}
+	function appearno(){                       /*错误后字体出现*/
+		var time2=setInterval(function(){
+			no2.innerHTML=no1.innerHTML.substring(0,i);
+			i++;
+			if(no2.innerHTML==no1.innerHTML){
+				qr2.style.visibility="visible";
+				clearInterval(time2);
+		}},100);
+	}
+	function next(){                         /*下一个同学*/
+		if(sum!=9){
+			yes.style.display="none";
+			no.style.display="none";
+			map.style.display="block";
+			btn.value="";
+			i=0;
+		}
+		else{
+			end();
+			yes.style.display="none";
+			no.style.display="none";
+			ending.style.display="block";
+		}
+	}
+	function end(){
+		ending.style.display="block";
+		if(jifen==1){
+			endimg.src=mark+".png";
+			switch(mark){
+			case 1: name="壹壹";break;
+			case 2: name="二二";break;
+			case 3: name="三三";break;
+			case 4: name="小四";break;
+			case 5: name="小五";break;
+			case 6: name="小六";break;
+			case 7: name="七七";break;
+			case 8: name="八八";break;
+			case 9: name="九九";break;
+			}
+			endword.innerHTML="看来你对"+name+"同学情有独钟呢！";	
+		}
+		if(jifen==0){
+			endimg.src="16.png";
+			endimg.style.margin=0;
+			endword.innerHTML="啊哦，看来你的记忆力不大行呢，要再多多努力啊！经常用脑，多喝十六个核桃！";	
+		}
+		if(jifen<5&&jifen>1){
+			endimg.src="pk.png";
+			endimg.style.margin=0;
+			endword.innerHTML="你的记忆力还不错，但要多多参与班级活动和同学们互动哦！";	
+		}
+		if(jifen<9&&jifen>4){
+			endimg.src="flower.png";
+			endimg.style.margin=0;
+			endword.innerHTML="你的记忆力真是太棒了，被你记住名字的新同学都很乐意和你继续接触";	
+		}
+		if(jifen==9){
+			endimg.src="all.png";
+			endimg.style.margin=0;
+			endword.innerHTML="你很快就融入了新环境中，大家都觉得你是个记忆小天才！";	
+		}
+	}
+	</script>
+</body>
+</html>
